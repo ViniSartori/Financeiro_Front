@@ -1,0 +1,169 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  
+  .container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .conta-form {
+    margin-bottom: 30px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+  }
+  
+  form h2 {
+    margin-top: 0;
+    color: #333;
+    text-align: center;
+  }
+  
+  form .form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  form .form-row div {
+    flex: 1;
+  }
+  
+  form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  form input[type="text"],
+  form input[type="checkbox"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  form input[type="checkbox"] {
+    width: auto;
+  }
+  
+  form button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  form button[type="button"] {
+    background-color: #f44336;
+    color: white;
+    margin-left: 10px;
+  }
+  
+
+ form button[type="button-back"] {
+  background-color: rgb(106, 106, 226);
+  color: white;
+  margin-left: 10px;
+} 
+
+  form button:hover {
+    opacity: 0.9;
+  }
+  
+  .table-section {
+    width: 100%;
+  }
+  
+  .table-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  table thead {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  table th,
+  table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  table tbody tr td {
+    transition: background-color 0.3s ease;
+  }
+  
+  table button {
+    padding: 5px 10px;
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  table button.btn-warning {
+    background-color: #ffc107;
+    color: #333;
+  }
+  
+  table button.btn-success {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  table button.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  table button:hover {
+    opacity: 0.9;
+  }
+  
+  .message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #4caf50;
+    text-align: center;
+    display: none; /* Inicialmente oculta */
+  }
+  

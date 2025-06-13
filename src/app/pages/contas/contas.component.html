@@ -1,0 +1,85 @@
+<div class="container">
+  <!-- Cadastro de Conta -->
+  <div class="conta-form">
+    <form (ngSubmit)="onSubmit()">
+      <h2>Cadastro de Conta</h2>
+      <div class="form-row">
+        <div>
+          <label for="banco">Banco:</label>
+          <input type="text" id="banco" [(ngModel)]="conta.banco" name="banco" required />
+        </div>
+        <div>
+          <label for="agencia">Agência:</label>
+          <input type="text" id="agencia" [(ngModel)]="conta.agencia" name="agencia" required />
+        </div>
+        <div>
+          <label for="numeroConta">Número da Conta:</label>
+          <input type="text" id="numeroConta" [(ngModel)]="conta.numeroConta" name="numeroConta" required />
+        </div>
+        <div>
+          <label for="ativo">Ativo:</label>
+          <input type="checkbox" id="ativo" [(ngModel)]="conta.ativo" name="ativo" />
+        </div>
+      </div>
+      <div>
+        <button type="submit">Cadastrar</button>
+        <button type="button" (click)="onCancel()">Cancelar</button>
+        <button type="button-back" (click)="navegarParaMovimentacoes()">Voltar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Contas Cadastradas -->
+  <div class="table-section">
+    <div class="table-title">Contas Cadastradas</div>
+    <table *ngIf="contas && contas.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Banco</th>
+          <th>Agência</th>
+          <th>Número da Conta</th>
+          <th>Ativo</th>
+          <th>Editar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let conta of contas; let i = index">
+          <td>{{ conta.id }}</td>
+          <td>
+            <ng-container *ngIf="editIndex === i; else viewBanco">
+              <input [(ngModel)]="conta.banco" name="banco-{{ i }}" />
+            </ng-container>
+            <ng-template #viewBanco>{{ conta.banco }}</ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="editIndex === i; else viewAgencia">
+              <input [(ngModel)]="conta.agencia" name="agencia-{{ i }}" />
+            </ng-container>
+            <ng-template #viewAgencia>{{ conta.agencia }}</ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="editIndex === i; else viewNumeroConta">
+              <input [(ngModel)]="conta.numeroConta" name="numeroConta-{{ i }}" />
+            </ng-container>
+            <ng-template #viewNumeroConta>{{ conta.numeroConta }}</ng-template>
+          </td>
+          <td>
+            <ng-container *ngIf="editIndex === i; else viewAtivo">
+              <input type="checkbox" [(ngModel)]="conta.ativo" name="ativo-{{ i }}" />
+            </ng-container>
+            <ng-template #viewAtivo>{{ conta.ativo ? 'Sim' : 'Não' }}</ng-template>
+          </td>
+          <td>
+            <button *ngIf="editIndex !== i" class="btn btn-warning mx-2" (click)="onEdit(i)">Editar</button>
+            <button *ngIf="editIndex === i" class="btn btn-success mx-2" (click)="editConta(i)">Salvar</button>
+            <button *ngIf="editIndex === i" class="btn btn-secondary mx-2" (click)="onCancelEdit()">Cancelar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mensagem de sucesso -->
+  <div *ngIf="message" class="message">{{ message }}</div>
+</div>

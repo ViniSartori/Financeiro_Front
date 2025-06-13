@@ -1,0 +1,140 @@
+<div class="cashflow-container">
+  <h2>Fluxo de Caixa</h2>
+
+  <!-- Seleção de Conta e Cadastro -->
+  <div class="form-group">
+    <label for="conta">Conta:</label>
+    <select id="conta" [(ngModel)]="numeroContaSelecionada" (change)="onContaChange()">
+      <option *ngFor="let conta of contas" [value]="conta.numeroConta">
+        {{ conta.banco }} - {{ conta.agencia }} - {{ conta.numeroConta }}
+      </option>
+    </select>
+    <button (click)="navegarParaCadastroConta()">Cadastrar Conta</button>
+  </div>
+
+  <!-- Formulário de Nova Movimentação -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="data">Data:</label>
+      <input type="date" id="data" [(ngModel)]="novaMovimentacao.data" required />
+    </div>
+
+    <div class="form-group">
+      <label for="historico">Histórico:</label>
+      <input type="text" id="historico" [(ngModel)]="novaMovimentacao.historico" required />
+    </div>
+
+    <div class="form-group">
+      <label for="valor">Valor:</label>
+      <input type="number" id="valor" [(ngModel)]="novaMovimentacao.valor" required step="0.01" />
+    </div>
+
+    <div class="form-group">
+      <label for="repetir">Repetir por:</label>
+      <select id="repetir" [(ngModel)]="repetir">
+        <option *ngFor="let valor of repeticaoMeses" [value]="valor">{{ valor }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group center">
+    <button type="button" (click)="salvarMovimentacao()">Salvar</button>
+  </div>
+
+  <!-- Feedback -->
+  <div *ngIf="message" class="message">{{ message }}</div>
+
+  <div class="container">
+  <!-- Movimentações -->
+  <section class="movimentacoes">
+    <h3>Movimentações</h3>
+
+    <!-- Filtro de Mês e Ano -->
+    <div class="filtro-mes-ano">
+      <label for="mes">Mês:</label>
+      <select id="mes" [(ngModel)]="mesSelecionado" (change)="onFiltroChange()">
+        <option *ngFor="let mes of meses" [value]="mes.valor">{{ mes.nome }}</option>
+      </select>
+
+      <label for="ano">Ano:</label>
+      <select id="ano" [(ngModel)]="anoSelecionado" (change)="onFiltroChange()">
+        <option *ngFor="let ano of anos" [value]="ano">{{ ano }}</option>
+      </select>
+    </div>
+
+    <table *ngIf="movimentacoes.length >= 0">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Histórico</th>
+          <th>Valor</th>
+          <th>Conferido</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mov of movimentacoes">
+          <td (dblclick)="editarCampo(mov, 'data')">
+            <input *ngIf="mov.editandoCampo === 'data'" type="date" [(ngModel)]="mov.data">
+            <span *ngIf="mov.editandoCampo !== 'data'">{{ mov.data }}</span>
+          </td>
+      
+          <td (dblclick)="editarCampo(mov, 'historico')">
+            <input *ngIf="mov.editandoCampo === 'historico'" type="text" [(ngModel)]="mov.historico">
+            <span *ngIf="mov.editandoCampo !== 'historico'">{{ mov.historico }}</span>
+          </td>
+      
+          <td class="table-value" [ngClass]="{ 'negative-value': mov.valor < 0 }" (dblclick)="editarCampo(mov, 'valor')">
+            <input *ngIf="mov.editandoCampo === 'valor'" type="number" [(ngModel)]="mov.valor">
+            <span *ngIf="mov.editandoCampo !== 'valor'">{{ mov.valor | currency:'BRL' }}</span>
+          </td>
+      
+          <td>
+            <input type="checkbox" [checked]="mov.conferido" [(ngModel)]="mov.conferido" (change)="editarCampo(mov, 'conferido')">
+          </td>
+          
+          
+      
+          <td>
+            <button *ngIf="mov.editandoCampo" (click)="salvarEdicao(mov)">✔</button>
+            <button (click)="excluirMovimentacao(mov.id)">❌</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Saldos -->
+  <section class="saldos">
+    <h3>Saldos</h3>
+<table>
+  <tr>
+    <th class="saldoFinal">
+      <span>Saldo Atual:</span>
+      <span [ngClass]="{ 'negative-value': (saldos?.saldoAtual || 0) < 0 }">
+        {{ saldos?.saldoAtual | currency:'BRL'}}
+      </span>
+    </th>
+    <th class="saldoFinal">
+      <span>Saldo Projetado Mês:</span>
+      <span [ngClass]="{ 'negative-value': (saldos?.saldoProjetado || 0) < 0 }">
+        {{ saldos?.saldoProjetado | currency:'BRL'}}
+      </span>
+    </th>
+    <th class="saldoFinal">
+      <span>Total de Entradas Mês:</span>
+      <span [ngClass]="{ 'negative-value': (saldos?.totalEntradas || 0) < 0 }">
+        {{ saldos?.totalEntradas | currency:'BRL'}}
+      </span>
+    </th>
+    <th class="saldoFinal">
+      <span>Total de Saídas Mês:</span>
+      <span [ngClass]="{ 'negative-value': (saldos?.totalSaidas || 0) < 0 }">
+        {{ saldos?.totalSaidas | currency:'BRL'}}
+      </span>
+    </th>
+  </tr>
+</table>
+    </section>
+  </div>
+</div>
